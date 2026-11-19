@@ -111,3 +111,4 @@ INSERT INTO estoque_unidade (unidade_id, produto_id, quantidade_disponivel) VALU
 (2, 1, 35), (2, 2, 45), (2, 3, 25), (2, 4, 50), (2, 5, 70),
 (3, 1, 40), (3, 2, 30), (3, 3, 55), (3, 4, 40), (3, 5, 65)
 ON CONFLICT (unidade_id, produto_id) DO NOTHING;
+

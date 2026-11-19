@@ -31,3 +31,4 @@ class AuditoriaService
         return $registro->save(false);
     }
 }
+

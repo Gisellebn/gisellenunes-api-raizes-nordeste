@@ -1,0 +1,82 @@
+<mxfile host="app.diagrams.net" modified="2026-11-18T16:00:00.000Z" agent="Antigravity" version="24.0.0" type="device">
+  <diagram id="der-raizes-nordeste" name="DER - Raízes do Nordeste">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- usuario -->
+        <mxCell id="tbl_usuario" value="usuario&#xa;---&#xa;PK id : SERIAL&#xa;nome : VARCHAR(120)&#xa;email : VARCHAR(150)&#xa;senha_hash : VARCHAR(255)&#xa;cpf : VARCHAR(14)&#xa;perfil : VARCHAR(30)&#xa;aceita_termos_lgpd : BOOLEAN&#xa;criado_em : TIMESTAMP" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="240" height="200" as="geometry" />
+        </mxCell>
+
+        <!-- unidade -->
+        <mxCell id="tbl_unidade" value="unidade&#xa;---&#xa;PK id : SERIAL&#xa;nome : VARCHAR(120)&#xa;cidade : VARCHAR(100)&#xa;estado : CHAR(2)&#xa;endereco : VARCHAR(255)&#xa;ativo : BOOLEAN" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="380" y="40" width="220" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- produto -->
+        <mxCell id="tbl_produto" value="produto&#xa;---&#xa;PK id : SERIAL&#xa;nome : VARCHAR(120)&#xa;descricao : TEXT&#xa;preco : NUMERIC(10,2)&#xa;categoria : VARCHAR(60)&#xa;ativo : BOOLEAN" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="720" y="40" width="220" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- estoque_unidade -->
+        <mxCell id="tbl_estoque" value="estoque_unidade&#xa;---&#xa;PK id : SERIAL&#xa;FK unidade_id : INTEGER&#xa;FK produto_id : INTEGER&#xa;quantidade_disponivel : INTEGER" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="550" y="250" width="230" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- pedido (apenas id como PK, usuario_id como FK) -->
+        <mxCell id="tbl_pedido" value="pedido&#xa;---&#xa;PK id : SERIAL&#xa;FK usuario_id : INTEGER&#xa;FK unidade_id : INTEGER&#xa;canal_pedido : VARCHAR(20)&#xa;status : VARCHAR(30)&#xa;valor_total : NUMERIC(10,2)&#xa;criado_em : TIMESTAMP" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="240" height="180" as="geometry" />
+        </mxCell>
+
+        <!-- pedido_item -->
+        <mxCell id="tbl_pedido_item" value="pedido_item&#xa;---&#xa;PK id : SERIAL&#xa;FK pedido_id : INTEGER&#xa;FK produto_id : INTEGER&#xa;quantidade : INTEGER&#xa;preco_unitario : NUMERIC(10,2)" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="380" y="420" width="230" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- pagamento_mock -->
+        <mxCell id="tbl_pagamento" value="pagamento_mock&#xa;---&#xa;PK id : SERIAL&#xa;FK pedido_id : INTEGER&#xa;valor : NUMERIC(10,2)&#xa;metodo : VARCHAR(30)&#xa;status : VARCHAR(30)&#xa;criado_em : TIMESTAMP" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="240" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- fidelidade -->
+        <mxCell id="tbl_fidelidade" value="fidelidade&#xa;---&#xa;PK id : SERIAL&#xa;FK usuario_id : INTEGER&#xa;pontos : INTEGER&#xa;atualizado_em : TIMESTAMP" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="380" y="610" width="230" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- auditoria_log -->
+        <mxCell id="tbl_auditoria" value="auditoria_log&#xa;---&#xa;PK id : SERIAL&#xa;FK usuario_id : INTEGER&#xa;acao : VARCHAR(100)&#xa;entidade : VARCHAR(100)&#xa;entidade_id : INTEGER&#xa;detalhes : TEXT&#xa;criado_em : TIMESTAMP" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=left;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="720" y="420" width="230" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- Relacionamentos -->
+        <mxCell id="rel_usuario_pedido" edge="1" parent="1" source="tbl_usuario" target="tbl_pedido" style="endArrow=ERmany;startArrow=ERone;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_unidade_pedido" edge="1" parent="1" source="tbl_unidade" target="tbl_pedido" style="endArrow=ERmany;startArrow=ERone;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_unidade_estoque" edge="1" parent="1" source="tbl_unidade" target="tbl_estoque" style="endArrow=ERmany;startArrow=ERone;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_produto_estoque" edge="1" parent="1" source="tbl_produto" target="tbl_estoque" style="endArrow=ERmany;startArrow=ERone;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_pedido_item" edge="1" parent="1" source="tbl_pedido" target="tbl_pedido_item" style="endArrow=ERmany;startArrow=ERone;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_produto_item" edge="1" parent="1" source="tbl_produto" target="tbl_pedido_item" style="endArrow=ERmany;startArrow=ERone;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_pedido_pagamento" edge="1" parent="1" source="tbl_pedido" target="tbl_pagamento" style="endArrow=ERmany;startArrow=ERone;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_usuario_fidelidade" edge="1" parent="1" source="tbl_usuario" target="tbl_fidelidade" style="endArrow=ERone;startArrow=ERone;rounded=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+

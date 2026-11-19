@@ -1,0 +1,110 @@
+classDiagram
+    class Usuario {
+        +int id
+        +string nome
+        +string email
+        +string senha_hash
+        +string cpf
+        +string perfil
+        +bool aceita_termos_lgpd
+        +string criado_em
+    }
+
+    class Unidade {
+        +int id
+        +string nome
+        +string cidade
+        +string estado
+        +string endereco
+        +bool ativo
+    }
+
+    class Produto {
+        +int id
+        +string nome
+        +string descricao
+        +float preco
+        +string categoria
+        +bool ativo
+    }
+
+    class EstoqueUnidade {
+        +int id
+        +int unidade_id
+        +int produto_id
+        +int quantidade_disponivel
+    }
+
+    class Pedido {
+        +int id
+        +int usuario_id
+        +int unidade_id
+        +string canal_pedido
+        +string status
+        +float valor_total
+        +string criado_em
+    }
+
+    class PedidoItem {
+        +int id
+        +int pedido_id
+        +int produto_id
+        +int quantidade
+        +float preco_unitario
+    }
+
+    class PagamentoMock {
+        +int id
+        +int pedido_id
+        +float valor
+        +string metodo
+        +string status
+        +string criado_em
+    }
+
+    class Fidelidade {
+        +int id
+        +int usuario_id
+        +int pontos
+        +string atualizado_em
+    }
+
+    class AuditoriaLog {
+        +int id
+        +int usuario_id
+        +string acao
+        +string entidade
+        +int entidade_id
+        +string detalhes
+        +string criado_em
+    }
+
+    class PedidoService {
+        +criarPedido(dados, usuarioId) Pedido
+    }
+
+    class PagamentoService {
+        +processarPagamento(dados, usuarioId) array
+    }
+
+    class AuditoriaService {
+        +registrar(usuarioId, acao, entidade, entidadeId, detalhes) bool
+    }
+
+    Usuario "1" --> "0..*" Pedido : realiza
+    Usuario "1" --> "0..1" Fidelidade : possui
+    Unidade "1" --> "0..*" Pedido : recebe
+    Unidade "1" --> "0..*" EstoqueUnidade : controla
+    Produto "1" --> "0..*" EstoqueUnidade : compõe
+    Pedido "1" --> "1..*" PedidoItem : contém
+    Produto "1" --> "0..*" PedidoItem : referenciado em
+    Pedido "1" --> "0..*" PagamentoMock : paga-se via
+
+    PedidoService ..> Pedido : cria
+    PedidoService ..> EstoqueUnidade : valida e baixa
+    PedidoService ..> AuditoriaService : registra log
+    PagamentoService ..> PagamentoMock : registra
+    PagamentoService ..> Fidelidade : credita pontos
+    PagamentoService ..> AuditoriaService : registra log
+    AuditoriaService ..> AuditoriaLog : persiste
+

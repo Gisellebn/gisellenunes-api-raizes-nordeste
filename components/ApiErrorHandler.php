@@ -73,3 +73,4 @@ class ApiErrorHandler extends ErrorHandler
         $response->send();
     }
 }
+

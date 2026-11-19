@@ -34,3 +34,4 @@ class m261118_120000_create_auditoria_log_table extends Migration
         $this->dropTable('{{%auditoria_log}}');
     }
 }
+
